@@ -81,10 +81,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-
-
-
         // Add a marker in Sydney and move the camera
         LatLng keelong = new LatLng(25.120, 121.741);
         mMap.addMarker(new MarkerOptions().position(keelong).title("基隆市").snippet("<h1>基隆市</h1>仁愛區成功一路\n仁愛區龍安街324巷(尚智國小)<br>仁愛區劉銘傳路至銘傳國中一帶<br>中正區調和街<br>中正區義二路<br>中正區祥豐街106巷<br>中正區中正路<br>中正區平一路<br>信義區信二路中興國小旁<br>信義區花源三街<br>信義區深溪路36巷<br>七堵區東新街人行道(基隆商工對面)<br>七堵區北基公路、明德三路(百福火車站)<br>暖暖區八堵路228公園<br>暖暖區碇內街210號前<br>七堵區華新一路2號與汐止交接處<br>七堵區大成街1號(瑪陵國小)<br>安樂區安和一街29號（建德國中前週邊）<br>安樂區安一路360號（安樂中學活動中心門口）<br>安樂區武訓街205號前武崙國中前週邊<br>中山區復興路336號經國管理學院前週邊<br>中山區西華里西定路166號聖心小學前週<br>"));
