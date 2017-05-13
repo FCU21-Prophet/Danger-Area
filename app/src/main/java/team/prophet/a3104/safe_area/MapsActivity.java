@@ -2,12 +2,15 @@ package team.prophet.a3104.safe_area;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -22,6 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
 
 
@@ -40,6 +44,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+            // Use default InfoWindow frame
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            // Defines the contents of the InfoWindow
+            @Override
+            public View getInfoContents(Marker arg0) {
+
+                // Getting view from the layout file info_window_layout
+                View v = getLayoutInflater().inflate(R.layout.windowlayout, null);
+
+                // Getting the position from the marker
+
+                String title = arg0.getTitle();
+                String snippet = arg0.getSnippet();
+                // Getting reference to the TextView to set latitude
+                TextView tvLat = (TextView) v.findViewById(R.id.tv_title);
+
+                // Getting reference to the TextView to set longitude
+                TextView tvLng = (TextView) v.findViewById(R.id.tv_snippet);
+
+                // Setting the latitude
+                tvLat.setText(title);
+
+                // Setting the longitude
+                tvLng.setText(snippet);
+
+                // Returning the view containing InfoWindow contents
+                return v;
+
+            }
+        });
+
+
+
+
 
         // Add a marker in Sydney and move the camera
         LatLng keelong = new LatLng(25.120, 121.741);
