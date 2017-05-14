@@ -98,16 +98,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mUiSettings.setZoomControlsEnabled(true);
         mUiSettings.setCompassEnabled(true);
         mUiSettings.setMyLocationButtonEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
+
         mMap.setMyLocationEnabled(true);
         mUiSettings.setScrollGesturesEnabled(true);
         mUiSettings.setZoomGesturesEnabled(true);
@@ -217,6 +208,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng taichung = new LatLng(24.179, 120.631);
         mMap.addMarker(new MarkerOptions().position(taichung).title("台中市").snippet("中區建國路周邊\n北區雙十路二段周邊\n東、南區復興路段\n南屯區文心森林公園周邊\n北屯區北屯市場周邊\n西屯區西屯路二段\n豐原區葫蘆墩公園周邊\n烏日區高鐵停車場周邊\n大里區大明、永隆路段週邊\n大甲區經國路、北堤東路口周遭\n太平區育才路與育英街口\n清水區高美路段\n石岡區石岡國中周邊"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(taichung,8));
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
