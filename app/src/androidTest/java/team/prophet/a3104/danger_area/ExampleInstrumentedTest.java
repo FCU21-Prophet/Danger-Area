@@ -1,4 +1,4 @@
-package team.prophet.a3104.safe_area;
+package team.prophet.a3104.danger_area;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
