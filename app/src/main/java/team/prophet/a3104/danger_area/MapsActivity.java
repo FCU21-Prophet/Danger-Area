@@ -7,11 +7,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,14 +25,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private static final int REQUEST_LOCATION = 2;
+    public double x, y;
     private GoogleMap mMap;
     private Button b;
     private TextView t;
     private LocationManager locationManager;
     private LocationListener listener;
-    public double x, y;
     private UiSettings mUiSettings;
 
     @Override
@@ -76,6 +82,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
         configure_button();
+
+        String url = "http://140.115.197.16/?school=fcu&app=危險的地方";
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet(url);
+        try {
+            HttpResponse response = client.execute(request);
+        } catch (Exception e) {
+            // Exception
+        }
+
     }
 
 
@@ -102,7 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION);
-        }else{
+        } else {
             mMap.setMyLocationEnabled(true);
         }
 
@@ -213,11 +229,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng taichung = new LatLng(24.179, 120.631);
         mMap.addMarker(new MarkerOptions().position(taichung).title("台中市").snippet("中區建國路周邊\n北區雙十路二段周邊\n東、南區復興路段\n南屯區文心森林公園周邊\n北屯區北屯市場周邊\n西屯區西屯路二段\n豐原區葫蘆墩公園周邊\n烏日區高鐵停車場周邊\n大里區大明、永隆路段週邊\n大甲區經國路、北堤東路口周遭\n太平區育才路與育英街口\n清水區高美路段\n石岡區石岡國中周邊"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(taichung,8));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(taichung, 8));
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 使用者允許權限
@@ -230,12 +247,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    void configure_button(){
+    void configure_button() {
         // first check for permissions
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET}
-                        ,10);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}
+                        , 10);
             }
             return;
         }
@@ -245,9 +262,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 //noinspection MissingPermission
                 locationManager.requestLocationUpdates("gps", 5000, 0, listener);
-                LatLng now = new LatLng(y,x);
+                LatLng now = new LatLng(y, x);
                 mMap.addMarker(new MarkerOptions().position(now));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now,8));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 8));
             }
         });
     }
